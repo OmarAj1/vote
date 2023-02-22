@@ -1,15 +1,15 @@
-// import { Parties } from "./voting";
-// import { Voting } from "./voting";
 export default Modify;
-function Modify() {
+function Modify(props) {
   const data = localStorage.getItem("userData");
   const found = JSON.parse(data);
   const founded = found.find((el) => {
     return el.count === 1;
   });
-  // if (!VotedFor) {
-  return <h1>You Voted for : {founded.name}</h1>;
-  // }
-  // return <>{/* <h1>voted for {VotedFor}</h1> */}</>;
-  //
+  return (
+        <div id="party">
+          <h1>You Voted for : {founded.name}</h1>
+          <button onClick={props.onClick} >Change Your Vote</button>
+          <button onClick={props.submitted} >Approve Your Vote To {founded.name}</button>
+        </div>
+)
 }

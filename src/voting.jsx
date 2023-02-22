@@ -3,11 +3,12 @@ import Button from "./btn";
 import Image from "./img";
 import Count from "./count";
 import Modify from "./ModifyPage";
+import Admin from "./Admin";
 export const Parties = [
   {
     id: 1,
     name: "Conservative and Unionist Party",
-    img: "https://scontent.fsdv1-2.fna.fbcdn.net/v/t39.30808-6/272629363_482623133220970_1270741799012011870_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=LQp4-8dwiSwAX9UQYlY&_nc_ht=scontent.fsdv1-2.fna&oh=00_AfAfoC1RTkMf6E7VZIeXJ70sjDLvs1TwAnaZ0Uf3soem8Q&oe=63F3D691",
+    img: "https://img.freepik.com/premium-photo/two-road-signs-liberal-conservative-choice_441797-8265.jpg?w=2000",
     count: 0,
   },
   {
@@ -32,13 +33,14 @@ export const Parties = [
 
 const Voting = (props) => {
   const [votes, setVotes] = useState(Parties);
-  const [disabled, setDisabled] = useState(null);
+   const [disabled , setDisabled] = useState(null);
+  const [show,setShow] =useState(false);
 
   const handleVote = (id) => {
     setVotes((votes) =>
       votes.map((vote) => {
         if (vote.id === id) {
-          setDisabled();
+          setDisabled(true);
           return Object.assign({}, vote, {
             count: vote.count + 1,
             disabled: true,
@@ -46,19 +48,36 @@ const Voting = (props) => {
         }
         return vote;
       })
-    );
+      );
+      setShow(true)
   };
-  const VotedFor = votes.find((el) => {
-    localStorage.setItem("userData", JSON.stringify(votes));
-    return el.count === 1;
-  });
-  if (VotedFor) {
-    return ToModify();
+  // const VotedFor = votes.find((el) => {
+  //   return el.count === 1;
+  // });
+
+  const Change = () => {
+    setDisabled(false);
+    setShow(false)
+    setVotes((votes) =>
+      votes.map((vote) => {
+        if (vote.count === 1) {
+          return Object.assign({}, vote, { count: 0 , disabled:true})
+        }
+        return vote
+      })
+      )
+      setDisabled(null )
+  };
+  localStorage.setItem("userData", JSON.stringify(votes));
+
+  function submitting (){
+    if(props.type ==="Admin") {
+      return <Admin/>
+    }
+    else{
+      return <h1>You are All good to Go</h1>
+    }
   }
-  function ToModify() {
-    return <Modify />;
-  }
-  // console.log(votes[0].count);
   return (
     <div id="votingPage">
       <h1>{props.name} Vote for your favorite Party!</h1>
@@ -71,12 +90,17 @@ const Voting = (props) => {
                 name={vote.name}
                 onClick={() => handleVote(vote.id)}
                 disabled={disabled !== null}
-              />
+              />  
               <Count count={vote.count} />
             </div>
           </div>
         ))}
       </div>
+    <center>      
+      <div id="modify">
+        {show&&<Modify onClick = {Change} submitted = {submitting}/>}
+      </div>
+      </center>
     </div>
   );
 };

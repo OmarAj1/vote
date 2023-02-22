@@ -187,7 +187,7 @@ function LoginPage() {
     {
       name: "omar",
       password: " ",
-      type: "admin",
+      type: "user",
       email: "o@o.com",
     },
   ];
@@ -215,8 +215,8 @@ function LoginPage() {
     }
   }
   if (isLogged) {
-    return <Voting name={User.name} />;
-    //
+    return <Voting name={User.name} type ={User.type} />;
+    
   }
   return (
     // declaring form and its elements and targeting its values to email and password values

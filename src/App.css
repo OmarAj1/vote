@@ -31,13 +31,14 @@ h1{
     font-size: 12px;
 }
 #counting button {
-    background-color: transparent;
+    /* background-color: transparent; */
     border-radius: 10px;
     border:1px solid ;
     width: 70%;
 }
 img{
     height: 150px;
+    /* background-image: ; */
 }
 @media only screen and (max-width: 768px)  {
 #parties{
@@ -68,8 +69,17 @@ img{
     border-radius: 10px;
     border:1px solid ;
 }
-#submit:hover{
+#submit:hover,
+button:hover{
     background-color: #333;
     color : white;
 }
 
+button{
+    margin: 5px;
+    color: black;
+}
+#modify{
+    width: 200px;
+    align-self: center;
+}
