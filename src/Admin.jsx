@@ -1,5 +1,6 @@
-function Admin (){
-    return <h1>{console.log("goodMorning")}I am an admin</h1>
-    
+function Admin() {
+    console.log("good");
+
+  return <h1>I am an admin</h1>;
 }
-export default Admin;
+export default Admin ;

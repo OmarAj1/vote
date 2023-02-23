@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Voting from "./voting";
-export default LoginPage;
+import {Link} from "react-router-dom"
 
 function LoginPage() {
   const users = [
@@ -187,7 +187,7 @@ function LoginPage() {
     {
       name: "omar",
       password: " ",
-      type: "user",
+      type: "Admin",
       email: "o@o.com",
     },
   ];
@@ -207,6 +207,7 @@ function LoginPage() {
       // into the (User-param-value) so then we can use it later
       setLogged(true);
       SetUser(UserPerson);
+    localStorage.setItem("user", JSON.stringify(UserPerson))
       //   console.log(User.name);
       //   console.log(isLogged);
     } else {
@@ -247,8 +248,8 @@ function LoginPage() {
             submit
           </button>
         </div>
-        {/* <p style={{ display: "none" }}>User Not Found</p> */}
       </form>
     </div>
   );
 }
+export default LoginPage;

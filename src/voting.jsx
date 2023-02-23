@@ -2,8 +2,9 @@ import { useState } from "react";
 import Button from "./btn";
 import Image from "./img";
 import Count from "./count";
-import Modify from "./ModifyPage";
 import Admin from "./Admin";
+import Modify from "./ModifyPage";
+import {Link} from "react-router-dom"
 export const Parties = [
   {
     id: 1,
@@ -32,10 +33,13 @@ export const Parties = [
 ];
 
 const Voting = (props) => {
+  const user = (JSON.parse(localStorage.getItem("user")))
   const [votes, setVotes] = useState(Parties);
-   const [disabled , setDisabled] = useState(null);
+  const [disabled , setDisabled] = useState(null);
   const [show,setShow] =useState(false);
-
+  const [userType, setUserType] = useState('')
+  // const [isVoted,setVoted] =useState (false)
+  console.log(user)
   const handleVote = (id) => {
     setVotes((votes) =>
       votes.map((vote) => {
@@ -63,6 +67,7 @@ const Voting = (props) => {
         if (vote.count === 1) {
           return Object.assign({}, vote, { count: 0 , disabled:true})
         }
+        // console.log(votes);
         return vote
       })
       )
@@ -71,13 +76,18 @@ const Voting = (props) => {
   localStorage.setItem("userData", JSON.stringify(votes));
 
   function submitting (){
-    if(props.type ==="Admin") {
-      return <Admin/>
-    }
-    else{
-      return <h1>You are All good to Go</h1>
-    }
+    console.log(user.type);
+    setUserType(user.type)
+    // if(user.type ==="Admin") {
+    //     return <Admin/>
+    //     }
+    //     else{
+    //         return <h1>You are All good to Go</h1>
+    //       }
   }
+  // return <h1>ood</h1>;
+    // state variable hasVoted => if 
+
   return (
     <div id="votingPage">
       <h1>{props.name} Vote for your favorite Party!</h1>
@@ -100,6 +110,17 @@ const Voting = (props) => {
       <div id="modify">
         {show&&<Modify onClick = {Change} submitted = {submitting}/>}
       </div>
+      
+        {userType ? (
+        <div>
+        {userType === "Admin" ? (<div>
+          <Link to="/admin">
+          admin Page
+          </Link>
+        </div>):(<>thank u</>)}
+      </div>
+     ):(null)} 
+        
       </center>
     </div>
   );
